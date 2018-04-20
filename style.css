@@ -1,0 +1,177 @@
+body,
+	html {
+		margin:0;
+		padding:0;
+		background-color: #9e7a42;
+		/*background-image: url(images/tlm.png);*/
+		background-size: 20%;
+		background-repeat: repeat;
+
+	}
+	#wrap {
+		width:70%;
+		margin:0 auto;
+		background:#ffe92b;
+	}
+	.banner-title
+	{
+		position: absolute;
+		left:15%;
+		top:50%;
+		background-color: black;
+		 opacity: 0.75;
+	}
+	.header {
+		position: relative;
+    text-align: center;
+    color: white;
+	}
+  .hp{
+    width: 100%;
+    height: 100%;
+		display: block;
+  }
+	h1 {
+      font-size: 4vw;
+	    margin:0;
+    }
+	#nav {
+    border-top:solid .1vw;
+    border-bottom:solid .1vw;
+		padding:.5% .5%;
+		background:#3a2a0d;
+
+	}
+	#nav ul {
+		margin:0;
+		padding:0;
+		list-style:none;
+
+	}
+	#nav li {
+		display:inline;
+		margin:0;
+		padding:0;
+		color: white;
+	}
+	#nav a {
+		color: white;
+		font-size: 1.5vw;
+		margin-right: .5vw;
+	}
+  .leftcolumn {
+    float: left;
+    width: 20%;
+    background-image: url("tlm.png");
+    background-size: 100%;
+}
+.centercolumn {
+  float: left;
+  width: 59%;
+	padding: .5%;
+	background-color: white;
+}
+.textbox
+{
+	width:96%;
+	background-color:#3a2a0d;
+	padding: 2%;
+	color: white;
+}
+.centercolumn {
+	font-size: 1.5vw;
+	color: black;
+}
+.centercolumn h2{
+	font-size: 1.5vw;
+}
+.rightcolumn {
+  float: left;
+  width: 20%;
+  background-image: url("tlm.png");
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+	#footer {
+    border-top: solid .1vw;
+		clear:both;
+		padding:1% 1%;
+		background:#3a2a0d;
+		color:white;
+	}
+
+	#footer p
+  {
+		color: white;
+		font-size: 1vw;
+  }
+  #footer
+  {
+		color: white;
+		font-size: 1vw;
+  }
+
+	* html #footer {
+		width:100%;
+	}
+	.catalog_image{
+		float: left;
+		width:19.8%;
+		height:10%;
+	}
+	.store_image{
+		width:100%;
+		height:10%;
+	}
+	.checkbox-image{
+		width:100%;
+		height:10%;
+	}
+	.inventory-item{
+		width: 24%;
+		margin: .5%;
+		text-align: center;
+		float: left;
+	}
+	.selects{
+		width: 20%;
+		font-size: 1vw;
+	}
+	.select1Color{
+		width: 50%;
+		font-size: 1vw;
+	}
+	.select3Color{
+		width: 50%;
+		font-size: 1vw;
+	}
+	.select2Color{
+		width: 50%;
+		font-size: 1vw;
+	}
+	.select4Color{
+		width: 50%;
+		font-size: 1vw;
+	}
+	.saleButton{
+		display:block;
+		width: 30%;
+		font-size: 1vw;
+		margin-left: 35%;
+		margin-right: 35%;
+	}
+	.submitButton{
+		display:block;
+		width: 20%;
+		font-size: 1vw;
+		margin-left: 40%;
+	}
+	select{
+		background-color: white;
+		font-weight: bold;
+	}

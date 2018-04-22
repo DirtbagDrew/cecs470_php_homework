@@ -1,6 +1,6 @@
 #!/usr/local/php5/bin/php-cgi
 <?php
-$q1=$q2=$q3=$q5=$q5=$q6=$name=$email=$streetAddress=$city=$state=$nameErr=$emailErr=$sAErr=$cityErr="";
+$name=$email=$streetAddress=$city=$nameErr=$emailErr=$sAErr=$cityErr="";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
   if (empty($_POST["streetAddress"])) {
-    $cityErr = "streetAddress is required";
+    $streetAddress = "street Address is required";
   }
 }
 
@@ -92,7 +92,7 @@ function test_input($data) {
               <td><p>Round Stool</p></td>
               <td>
                 <label for="select1">Quantity</label><br>
-                <select size=3 name="select1" id="select1" class="selects">
+                <select size=3 name="select1" id="select2" class="selects">
                   <option <?php if ((isset($q1)&& $q1=="0")||isset($q1)==false) echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q1)&& $q1=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q1)&& $q1=="2") echo "selected=\"selected\""?> value="2">2</option>
@@ -192,72 +192,77 @@ function test_input($data) {
           </tbody>
         </table>
       </div>
+      <p><span class="error">* required field</span></p>
 
       <label for="name">name:</label>
-      <input type="text" name="name" value="name">
+      <input type="text" name="name" value="<?php echo $name;?>">
+      <span class="error">* <?php echo $nameErr;?></span>
       <br>
       <label for="email">email:</label>
-      <input type="email" name="email" value="enter a valid email">
+      <input type="email" name="email" value="<?php echo $email;?>">
+      <span class="error">* <?php echo $emailErr;?></span>
       <br>
       <label for="streetAddress"> street address</label>
-      <input type="text" name="streetAddress" value="street address">
+      <input type="text" name="streetAddress" value="<?php echo $city;?>">
+      <span class="error">* <?php echo $sAErr;?></span>
       <br>
       <label for="city">city</label>
-      <input type="text" name="city" value="city">
+      <input type="text" name="city" value="<?php echo $city;?>">
+      <span class="error">* <?php echo $cityErr;?></span>
       <br>
       <label for="state">state</label><br>
       <select size=5 name="state">
-      	<option selected="selected" value="AL">AL</option>
-      	<option value="AK">AK</option>
-      	<option value="AR">AR</option>
-      	<option value="AZ">AZ</option>
-      	<option value="CA">CA</option>
-      	<option value="CO">CO</option>
-      	<option value="CT">CT</option>
-      	<option value="DC">DC</option>
-      	<option value="DE">DE</option>
-      	<option value="FL">FL</option>
-      	<option value="GA">GA</option>
-      	<option value="HI">HI</option>
-      	<option value="IA">IA</option>
-      	<option value="ID">ID</option>
-      	<option value="IL">IL</option>
-      	<option value="IN">IN</option>
-      	<option value="KS">KS</option>
-      	<option value="KY">KY</option>
-      	<option value="LA">LA</option>
-      	<option value="MA">MA</option>
-      	<option value="MD">MD</option>
-      	<option value="ME">ME</option>
-      	<option value="MI">MI</option>
-      	<option value="MN">MN</option>
-      	<option value="MO">MO</option>
-      	<option value="MS">MS</option>
-      	<option value="MT">MT</option>
-      	<option value="NC">NC</option>
-      	<option value="NE">NE</option>
-      	<option value="NH">NH</option>
-      	<option value="NJ">NJ</option>
-      	<option value="NM">NM</option>
-      	<option value="NV">NV</option>
-      	<option value="NY">NY</option>
-      	<option value="ND">ND</option>
-      	<option value="OH">OH</option>
-      	<option value="OK">OK</option>
-      	<option value="OR">OR</option>
-      	<option value="PA">PA</option>
-      	<option value="RI">RI</option>
-      	<option value="SC">SC</option>
-      	<option value="SD">SD</option>
-      	<option value="TN">TN</option>
-      	<option value="TX">TX</option>
-      	<option value="UT">UT</option>
-      	<option value="VT">VT</option>
-      	<option value="VA">VA</option>
-      	<option value="WA">WA</option>
-      	<option value="WI">WI</option>
-      	<option value="WV">WV</option>
-      	<option value="WY">WY</option>
+      	<option <?php if ((isset($state)&& $state=="AL")||isset($state)==false) echo "selected=\"selected\""?> value="AL">AL</option>
+      	<option <?php if (isset($state)&& $state=="AK") echo "selected=\"selected\""?> value="AK">AK</option>
+      	<option <?php if (isset($state)&& $state=="AR") echo "selected=\"selected\""?> value="AR">AR</option>
+      	<option <?php if (isset($state)&& $state=="AZ") echo "selected=\"selected\""?> value="AZ">AZ</option>
+      	<option <?php if (isset($state)&& $state=="CA") echo "selected=\"selected\""?> value="CA">CA</option>
+      	<option <?php if (isset($state)&& $state=="CO") echo "selected=\"selected\""?> value="CO">CO</option>
+      	<option <?php if (isset($state)&& $state=="CT") echo "selected=\"selected\""?> value="CT">CT</option>
+      	<option <?php if (isset($state)&& $state=="DC") echo "selected=\"selected\""?> value="DC">DC</option>
+      	<option <?php if (isset($state)&& $state=="DE") echo "selected=\"selected\""?> value="DE">DE</option>
+      	<option <?php if (isset($state)&& $state=="FL") echo "selected=\"selected\""?> value="FL">FL</option>
+      	<option <?php if (isset($state)&& $state=="GA") echo "selected=\"selected\""?> value="GA">GA</option>
+      	<option <?php if (isset($state)&& $state=="HI") echo "selected=\"selected\""?> value="HI">HI</option>
+      	<option <?php if (isset($state)&& $state=="IA") echo "selected=\"selected\""?> value="IA">IA</option>
+      	<option <?php if (isset($state)&& $state=="ID") echo "selected=\"selected\""?> value="ID">ID</option>
+      	<option <?php if (isset($state)&& $state=="IL") echo "selected=\"selected\""?> value="IL">IL</option>
+      	<option <?php if (isset($state)&& $state=="IN") echo "selected=\"selected\""?> value="IN">IN</option>
+      	<option <?php if (isset($state)&& $state=="KS") echo "selected=\"selected\""?> value="KS">KS</option>
+      	<option <?php if (isset($state)&& $state=="KY") echo "selected=\"selected\""?> value="KY">KY</option>
+      	<option <?php if (isset($state)&& $state=="LA") echo "selected=\"selected\""?> value="LA">LA</option>
+      	<option <?php if (isset($state)&& $state=="MA") echo "selected=\"selected\""?> value="MA">MA</option>
+      	<option <?php if (isset($state)&& $state=="MD") echo "selected=\"selected\""?> value="MD">MD</option>
+      	<option <?php if (isset($state)&& $state=="ME") echo "selected=\"selected\""?> value="ME">ME</option>
+      	<option <?php if (isset($state)&& $state=="MI") echo "selected=\"selected\""?> value="MI">MI</option>
+      	<option <?php if (isset($state)&& $state=="MN") echo "selected=\"selected\""?> value="MN">MN</option>
+      	<option <?php if (isset($state)&& $state=="MO") echo "selected=\"selected\""?> value="MO">MO</option>
+      	<option <?php if (isset($state)&& $state=="MS") echo "selected=\"selected\""?> value="MS">MS</option>
+      	<option <?php if (isset($state)&& $state=="MT") echo "selected=\"selected\""?> value="MT">MT</option>
+      	<option <?php if (isset($state)&& $state=="NC") echo "selected=\"selected\""?> value="NC">NC</option>
+      	<option <?php if (isset($state)&& $state=="NE") echo "selected=\"selected\""?> value="NE">NE</option>
+      	<option <?php if (isset($state)&& $state=="NH") echo "selected=\"selected\""?> value="NH">NH</option>
+      	<option <?php if (isset($state)&& $state=="NJ") echo "selected=\"selected\""?> value="NJ">NJ</option>
+      	<option <?php if (isset($state)&& $state=="NM") echo "selected=\"selected\""?> value="NM">NM</option>
+      	<option <?php if (isset($state)&& $state=="NV") echo "selected=\"selected\""?> value="NV">NV</option>
+      	<option <?php if (isset($state)&& $state=="NY") echo "selected=\"selected\""?> value="NY">NY</option>
+      	<option <?php if (isset($state)&& $state=="ND") echo "selected=\"selected\""?> value="ND">ND</option>
+      	<option <?php if (isset($state)&& $state=="OH") echo "selected=\"selected\""?> value="OH">OH</option>
+      	<option <?php if (isset($state)&& $state=="OK") echo "selected=\"selected\""?> value="OK">OK</option>
+      	<option <?php if (isset($state)&& $state=="OR") echo "selected=\"selected\""?> value="OR">OR</option>
+      	<option <?php if (isset($state)&& $state=="PA") echo "selected=\"selected\""?> value="PA">PA</option>
+      	<option <?php if (isset($state)&& $state=="RI") echo "selected=\"selected\""?> value="RI">RI</option>
+      	<option <?php if (isset($state)&& $state=="SC") echo "selected=\"selected\""?> value="SC">SC</option>
+      	<option <?php if (isset($state)&& $state=="SD") echo "selected=\"selected\""?> value="SD">SD</option>
+      	<option <?php if (isset($state)&& $state=="TN") echo "selected=\"selected\""?> value="TN">TN</option>
+      	<option <?php if (isset($state)&& $state=="TX") echo "selected=\"selected\""?> value="TX">TX</option>
+      	<option <?php if (isset($state)&& $state=="UT") echo "selected=\"selected\""?> value="UT">UT</option>
+      	<option <?php if (isset($state)&& $state=="VT") echo "selected=\"selected\""?> value="VT">VT</option>
+      	<option <?php if (isset($state)&& $state=="VA") echo "selected=\"selected\""?> value="VA">VA</option>
+      	<option <?php if (isset($state)&& $state=="WA") echo "selected=\"selected\""?> value="WA">WA</option>
+      	<option <?php if (isset($state)&& $state=="WI") echo "selected=\"selected\""?> value="WI">WI</option>
+      	<option <?php if (isset($state)&& $state=="WV") echo "selected=\"selected\""?> value="WV">WV</option>
+      	<option <?php if (isset($state)&& $state=="WY") echo "selected=\"selected\""?> value="WY">WY</option>
       </select>
       <br>
 
@@ -266,6 +271,7 @@ function test_input($data) {
         <button class="submitButton" type="reset" name="reset">reset</button>
         <button class="submitButton" type="submit" name="submit">submit</button>
       </form>
+      <button class="saleButton" onclick="infoD()">Information Disclosure</button>
 
         <!--<button class="saleButton" onclick="showMonthlySale()">Click To See Item of the Month!</button>
         <form method="get" action="xx" id="mainForm" onsubmit="return formQuantity()">
@@ -323,9 +329,11 @@ function test_input($data) {
       </div>
   </div>
   <div id="footer">
-    Latest Update: <!--#echo var="LAST_MODIFIED"-->
-    <br>
-    <a href=mailto:andrew.myer@student.csulb.edu >andrew.myer@student.csulb.edu</a>
+    <?php
+    // outputs e.g. 'Last modified: March 04 1998 20:43:59.'
+    echo "Last modified: " . date ("F d Y H:i:s.", getlastmod());
+    echo "<br><a href='mailto:andrew.myer@student.csulb.edu'>andrew.myer@student.csulb.edu</a>"
+    ?>
   </div>
 </body>
 </html>

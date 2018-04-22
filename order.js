@@ -185,6 +185,16 @@ function showMonthlySale() {
     var x = document.getElementById("inventory-item4");
     x.style.display = "block";
 }
+function getValue(quantity)
+{
+  var x = document.getElementById("select2");
+  var y =x.value*quantity;
+  document.write("<p>"+y+"<p>")
+}
+
+function infoD() {
+    alert("Your information will not be used for advertizing or be disclosed to any third party. We will only use it to ship your order or contact you if an issue arises.");
+}
 
 function outputCartRow(file,index, title, quantity, price,total){
     document.write("<tr>");

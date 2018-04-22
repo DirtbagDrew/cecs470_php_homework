@@ -1,7 +1,10 @@
 #!/usr/local/php5/bin/php-cgi
+<?php
+$genres=array("Abstract", "Baroque", "Gothic", "Renaissance");
+$subjects=array("Animals", "Landscape", "People");
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <title>How The Turntables Furniture Store</title>
@@ -23,7 +26,7 @@
     <ul>
     <li><a href='furniture.html'>Home</a><li>
     <li><a href='contact.html'>Contact Us</a><li>
-    <li><a href='order.html'>Order</a><li>
+    <li><a href='order.php'>Order</a><li>
     </ul>
     </div>
     <div class="row">
@@ -32,7 +35,22 @@
     </div>
       <div class="centercolumn">
         <h2>Furniture Order Form</h2>
-        <button class="saleButton" onclick="showMonthlySale()">Click To See Item of the Month!</button>
+        <table class="table-fill">
+          <thead>
+            <tr>
+              <th>Product</th>
+						  <th>Title</th>
+              <th>#</th>
+              <th>Price</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+				      <script> outputCartRow("images/t2.jpeg",1,"Round Stool",2,20,40);</script>
+          </tbody>
+        </table>
+
+        <!--<button class="saleButton" onclick="showMonthlySale()">Click To See Item of the Month!</button>
         <form method="get" action="xx" id="mainForm" onsubmit="return formQuantity()">
           <div class="row">
             <div class="inventory-item">
@@ -81,7 +99,7 @@
       </div>
         </div>
         <button class="submitButton" type="submit" name="submit">submit</button>
-        </form>
+      </form>-->
       </div>
       <div class="rightcolumn">
         <br>

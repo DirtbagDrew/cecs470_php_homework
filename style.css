@@ -286,3 +286,8 @@ td.center {
   font-weight: 500;
 }
 .error {color: #923333;}
+.error1 {
+    background: #FFCDD2 url(error.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #FF5252;
+    border-color: #FF1744;
+}

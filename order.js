@@ -129,15 +129,36 @@ function subCheck(){
   var error=true;
   for(var i=0;i<reqSelector.length;i++)
   {
-
     if(reqSelector[i].value=="")
     {
-      reqSelector[i].classList.add("error");
+      reqSelector[i].classList.add("error1");
       error=false;
     }
     else {
       reqSelector[i].setAttribute("class","required");
     }
+    var x = document.getElementById("ship").value;
+    if(x=="10"||x=="50")
+    {
+      var shipSelector=document.getElementsByClassName("ships");
+      for(var j=0;j<shipSelector.length;j++)
+      {
+        if(shipSelector[j].value=="")
+        {
+          shipSelector[j].classList.add("error1");
+          error=false;
+        }
+      }
+    }
+    if(x=="0")
+    {
+      var shipSelector=document.getElementsByClassName("ships");
+      for(var j=0;j<shipSelector.length;j++)
+      {
+        shipSelector[j].classList.remove("error1");
+      }
+    }
+
   }
   return error;
 }

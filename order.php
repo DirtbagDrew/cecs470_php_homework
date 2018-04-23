@@ -105,7 +105,7 @@ function test_input($data) {
       <div class="centercolumn">
         <h2>Furniture Order Form</h2>
         <button class="saleButton" onclick="showMonthlySale()">Click To See Items on sale!</button>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" onsubmit="subCheck()">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" onsubmit="return subCheck()">
         <table class="table-fill">
           <thead>
             <tr>
@@ -260,11 +260,11 @@ function test_input($data) {
       <span class="error">* <?php echo $emailErr;?></span>
       <br>
       <label for="streetAddress"> street address</label>
-      <input type="text" name="streetAddress" id="streetAddress" class="required hilightable" value="<?php echo $city;?>">
+      <input type="text" name="streetAddress" id="streetAddress" class="ships hilightable" value="<?php echo $city;?>">
       <span class="error" id="sError"><?php echo $sAErr;?></span>
       <br>
       <label for="city">city</label>
-      <input type="text" name="city" id="city" class="required hilightable" value="<?php echo $city;?>">
+      <input type="text" name="city" id="city" class="ships hilightable" value="<?php echo $city;?>">
       <span class="error" id="cError"><?php echo $cityErr;?></span>
       <br>
       <label for="state">state</label><br>
@@ -323,7 +323,7 @@ function test_input($data) {
       </select>
       <br>
       <label for="zip">zip code</label>
-      <input type="text" name="zip" id="zip" class="required hilightable" value="<?php echo $zip;?>">
+      <input type="text" name="zip" id="zip" class="ships hilightable" value="<?php echo $zip;?>">
       <span class="error" id="zError"><?php echo $zipErr;?></span>
       <br>
       <table class="table-fill">

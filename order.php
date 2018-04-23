@@ -29,33 +29,36 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       $emailErr = "Invalid email format";
     }
   }
-  if (empty($_POST["city"])) {
-    $cityErr = "city is required";
-  } else {
-    $city = test_input($_POST["city"]);
-    // check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z ]*$/",$city)) {
-      $cityErr = "Only letters and white space allowed";
+  if($ship=="10"||$ship=="50"){
+    if (empty($_POST["city"])) {
+      $cityErr = "City is required";
+    } else {
+      $city = test_input($_POST["city"]);
+      // check if name only contains letters and whitespace
+      if (!preg_match("/^[a-zA-Z ]*$/",$city)) {
+        $cityErr = "Only letters and white space allowed";
+      }
+    }
+    if (empty($_POST["streetAddress"])) {
+      $sAErr = "Street address is required";
+    }
+    if (empty($_POST["zip"])) {
+      $zipErr = "Zip code is required";
+    } else {
+      $zip = test_input($_POST["zip"]);
+      // check if name only contains letters and whitespace
+      if (!preg_match('#[0-9]{5}#', $zip)) {
+        $zipErr = "Incorrect formatting";
+      }
     }
   }
-  if (empty($_POST["streetAddress"])) {
-    $sAErr = "Street address is required";
-  }
-  if (empty($_POST["zip"])) {
-    $zippErr = "Zip code is required";
-  } else {
-    $zip = test_input($_POST["zip"]);
-    // check if name only contains letters and whitespace
-    if (!preg_match('#[0-9]{5}#', $zip)) {
-      $zipErr = "Incorrect formatting";
-    }
-  }
+
   $subtot=$q1*20+$q2*30+$q3*40+$q4*50+$q5*10+$q6*15;
   $tax=$subtot+$ship;
   $tax=.09*$tax;
   $tot=$subtot+$tax+$ship;
 
-  if($nameErr==""&&$emailErr==""&&$sAErr==""&&$cityErr=="")
+  if($nameErr==""&&$emailErr==""&&$sAErr==""&&$cityErr==""&&$zipErr=="")
   {
     file_put_contents('test.txt', file_get_contents('php://input'));
     header("Location:orderConfirm.php");
@@ -119,12 +122,13 @@ function test_input($data) {
               <td><p>Night Stand, Maple</p></td>
               <td>
                 <label for="select1">Quantity</label><br>
-                <select size=3 name="q1" id="select1" class="selects" onchange='updateAll();'>
+                <select size=3 name="q1" id="select1" class="selects">
                   <option <?php if (isset($q1)&& $q1=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q1)&& $q1=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q1)&& $q1=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q1)&& $q1=="3") echo "selected=\"selected\""?> value="3">3</option>
                 </select>
+                <button type="button" class="updateButton" onclick="updateAll()">update</button>
               </td>
               <td><p>$20</p></td>
               <td><div id="q1td"><p>$ <?php echo $q1*20;?></p></div></td>
@@ -135,12 +139,13 @@ function test_input($data) {
               <td><p>Round Stool, Pine</p></td>
               <td>
                 <label for="select2">Quantity</label><br>
-                <select size=3 name="q2" id="select2" class="selects" onchange='updateAll();'>
+                <select size=3 name="q2" id="select2" class="selects">
                   <option <?php if (isset($q2)&& $q2=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q2)&& $q2=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q2)&& $q2=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q2)&& $q2=="3") echo "selected=\"selected\""?> value="3">3</option>
                   </select>
+                  <button type="button" class="updateButton" onclick="updateAll()">update</button>
               </td>
               <td><p>$30</p></td>
               <td><div id="q2td"><p>$ <?php echo $q2*30;?></p></div></td>
@@ -151,12 +156,13 @@ function test_input($data) {
               <td><p>Bench Table, Unpolished</p></td>
               <td>
                 <label for="select3">Quantity</label><br>
-                <select size=3 name="q3" id="select3" class="selects" onchange='updateAll();'>
+                <select size=3 name="q3" id="select3" class="selects">
                   <option <?php if (isset($q3)&& $q3=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q3)&& $q3=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q3)&& $q3=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q3)&& $q3=="3") echo "selected=\"selected\""?> value="3">3</option>
                   </select>
+                  <button type="button" class="updateButton" onclick="updateAll()">update</button>
               </td>
               <td><p>$40</p></td>
               <td><div id="q3td"><p>$ <?php echo $q3*40;?></p></div></td>
@@ -167,12 +173,13 @@ function test_input($data) {
               <td><p>Round Table, Balsa</p></td>
               <td>
                 <label for="select4">Quantity</label><br>
-                <select size=3 name="q4" id="select4" class="selects" onchange='updateAll();'>
+                <select size=3 name="q4" id="select4" class="selects">
                   <option <?php if (isset($q4)&& $q4=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q4)&& $q4=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q4)&& $q4=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q4)&& $q4=="3") echo "selected=\"selected\""?> value="3">3</option>
                   </select>
+                  <button type="button" class="updateButton" onclick="updateAll()">update</button>
 
 
               </td>
@@ -198,12 +205,13 @@ function test_input($data) {
               <td><p>Chess Table</p></td>
               <td>
                 <label for="select5">Quantity</label><br>
-                <select size=3 name="q5" id="select5" class="selects" onchange='updateAll();'>
+                <select size=3 name="q5" id="select5" class="selects">
                   <option <?php if (isset($q5)&& $q5=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q5)&& $q5=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q5)&& $q5=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q5)&& $q5=="3") echo "selected=\"selected\""?> value="3">3</option>
                   </select>
+                  <button type="button" class="updateButton" onclick="updateAll()">update</button>
               </td>
               <td><p>$10</p></td>
               <td><div id="q5td"><p>$ <?php echo $q5*10;?></p></div></td>
@@ -214,12 +222,13 @@ function test_input($data) {
               <td><p>Round Stool, Unpolished</p></td>
               <td>
                 <label for="select6">Quantity</label><br>
-                <select size=3 name="q6" id="select6" class="selects" onchange='updateAll();'>
+                <select size=3 name="q6" id="select6" class="selects">
                   <option <?php if (isset($q6)&& $q6=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q6)&& $q6=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q6)&& $q6=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q6)&& $q6=="3") echo "selected=\"selected\""?> value="3">3</option>
                   </select>
+                  <button type="button" class="updateButton" onclick="updateAll()">update</button>
               </td>
               <td><p>$15</p></td>
               <td><div id="q6td"><p>$ <?php echo $q6*15;?></p></div></td>
@@ -252,11 +261,11 @@ function test_input($data) {
       <br>
       <label for="streetAddress"> street address</label>
       <input type="text" name="streetAddress" id="streetAddress" class="required hilightable" value="<?php echo $city;?>">
-      <span class="error">* <?php echo $sAErr;?></span>
+      <span class="error" id="sError"><?php echo $sAErr;?></span>
       <br>
       <label for="city">city</label>
       <input type="text" name="city" id="city" class="required hilightable" value="<?php echo $city;?>">
-      <span class="error">* <?php echo $cityErr;?></span>
+      <span class="error" id="cError"><?php echo $cityErr;?></span>
       <br>
       <label for="state">state</label><br>
       <select size=5 id="state" name="state">
@@ -315,7 +324,7 @@ function test_input($data) {
       <br>
       <label for="zip">zip code</label>
       <input type="text" name="zip" id="zip" class="required hilightable" value="<?php echo $zip;?>">
-      <span class="error">* <?php echo $zipErr;?></span>
+      <span class="error" id="zError"><?php echo $zipErr;?></span>
       <br>
       <table class="table-fill">
         <thead>
@@ -328,11 +337,12 @@ function test_input($data) {
               <td><p>Shipping<br>shipping is $10 in the 92647 area and $50 outside<p></td>
               <td>
                 <label for="ship">Quantity</label><br>
-                <select size=2 name="ship" id="ship" class="selects" onchange='shipUpdate();'>
+                <select size=2 name="ship" id="ship" class="selects">
                   <option <?php if (isset($ship)&& $ship=="0") echo "selected=\"selected\""?> value="0">Pickup</option>
                   <option <?php if (isset($ship)&& $ship=="10") echo "selected=\"selected\""?> value="10">Shipping in 92647</option>
                   <option <?php if (isset($ship)&& $ship=="50") echo "selected=\"selected\""?> value="50">Shipping outside 92647</option>
                 </select>
+                <button type="button" class="updateButton" onclick="shipUpdate()">update</button>
               </td>
               <td><div id="shipPrice"><p>$ <?php echo $ship;?></p></div></td>
             </tr>

@@ -90,14 +90,23 @@ function shipUpdate()
   var x = document.getElementById("ship").value;
   if(x=="0"){
     document.getElementById("shipPrice").innerHTML = '<p>$0</p>';
+    document.getElementById("sError").innerHTML = '';
+    document.getElementById("cError").innerHTML = '';
+    document.getElementById("zError").innerHTML = '';
     shipping=0;
   }
   if(x=="10"){
     document.getElementById("shipPrice").innerHTML = '<p>$10</p>';
+    document.getElementById("sError").innerHTML += '<p>*</p>';
+    document.getElementById("cError").innerHTML += '<p>*</p>';
+    document.getElementById("zError").innerHTML += '<p>*</p>';
     shipping=10;
   }
   if(x=="50"){
     document.getElementById("shipPrice").innerHTML = '<p>$50</p>';
+    document.getElementById("sError").innerHTML += '<p>*</p>';
+    document.getElementById("cError").innerHTML += '<p>*</p>';
+    document.getElementById("zError").innerHTML += '<p>*</p>';
     shipping=50;
   }
   tax=subTot+shipping;

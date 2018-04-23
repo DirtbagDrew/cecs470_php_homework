@@ -1,58 +1,5 @@
 #!/usr/local/php5/bin/php-cgi
 <?php
-$name=$email=$streetAddress=$city=$nameErr=$emailErr=$sAErr=$cityErr="";
-$q1=$q2=$q3=$q4=$q5=$q6=$subtot="0";
-
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-  $q1=$_POST["q1"];
-  $q2=$_POST["q2"];
-  $q3=$_POST["q3"];
-  $q4=$_POST["q4"];
-  $q5=$_POST["q5"];
-  $q6=$_POST["q6"];
-  if (empty($_POST["name"])) {
-    $nameErr = "Name is required";
-  } else {
-    $name = test_input($_POST["name"]);
-    // check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
-      $nameErr = "Only letters and white space allowed";
-    }
-  }
-  if (empty($_POST["email"])) {
-    $emailErr = "Email is required";
-  } else {
-    $email = test_input($_POST["email"]);
-    // check if e-mail address is well-formed
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      $emailErr = "Invalid email format";
-    }
-  }
-  if (empty($_POST["city"])) {
-    $cityErr = "city is required";
-  } else {
-    $city = test_input($_POST["city"]);
-    // check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z ]*$/",$city)) {
-      $cityErr = "Only letters and white space allowed";
-    }
-  }
-  if (empty($_POST["streetAddress"])) {
-    $streetAddress = "street Address is required";
-  }
-  $subtot=$q1*20+$q2*20+$q3*20+$q4*20+$q5*20+$q6*20;
-  if(!isset($emailErr))
-  {
-
-  }
-}
-
-function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,6 +38,8 @@ function test_input($data) {
         <p>please click on the link below to take you back to the home page</p>
         <br>
         <a href="furniture.html">home</a>
+        <br>
+        <a href="test.txt">text</a>
       </div>
       <div class="rightcolumn">
         <br>

@@ -1,8 +1,16 @@
 #!/usr/local/php5/bin/php-cgi
 <?php
-$name=$email=$streetAddress=$city=$nameErr=$emailErr=$sAErr=$cityErr="";
+$name=$email=$streetAddress=$city=$nameErr=$emailErr=$sAErr=$cityErr=$zip=$zipErr="";
+$q1=$q2=$q3=$q4=$q5=$q6=$subtot=$ship=$tot=$tax="0";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
+  $ship=$_POST["ship"];
+  $q1=$_POST["q1"];
+  $q2=$_POST["q2"];
+  $q3=$_POST["q3"];
+  $q4=$_POST["q4"];
+  $q5=$_POST["q5"];
+  $q6=$_POST["q6"];
   if (empty($_POST["name"])) {
     $nameErr = "Name is required";
   } else {
@@ -31,7 +39,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
   if (empty($_POST["streetAddress"])) {
-    $streetAddress = "street Address is required";
+    $sAErr = "Street address is required";
+  }
+  if (empty($_POST["zip"])) {
+    $zippErr = "Zip code is required";
+  } else {
+    $zip = test_input($_POST["zip"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match('#[0-9]{5}#', $zip)) {
+      $zipErr = "Incorrect formatting";
+    }
+  }
+  $subtot=$q1*20+$q2*30+$q3*40+$q4*50+$q5*10+$q6*15;
+  $tax=$subtot+$ship;
+  $tax=.09*$tax;
+  $tot=$subtot+$tax+$ship;
+
+  if($nameErr==""&&$emailErr==""&&$sAErr==""&&$cityErr=="")
+  {
+    file_put_contents('test.txt', file_get_contents('php://input'));
+    header("Location:orderConfirm.php");
   }
 }
 
@@ -74,8 +101,8 @@ function test_input($data) {
     </div>
       <div class="centercolumn">
         <h2>Furniture Order Form</h2>
-        <button class="saleButton" onclick="showMonthlySale()">Click To See Item of the Month!</button>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <button class="saleButton" onclick="showMonthlySale()">Click To See Items on sale!</button>
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" onsubmit="subCheck()">
         <table class="table-fill">
           <thead>
             <tr>
@@ -88,63 +115,69 @@ function test_input($data) {
           </thead>
           <tbody>
             <tr>
-              <td><img src="images/t2.jpeg" alt=" " class="orderImage"></td>
-              <td><p>Round Stool</p></td>
+              <td><img src="images/t1.JPG" alt="Night Stand, Maple" class="orderImage"></td>
+              <td><p>Night Stand, Maple</p></td>
               <td>
                 <label for="select1">Quantity</label><br>
-                <select size=3 name="select1" id="select2" class="selects">
-                  <option <?php if ((isset($q1)&& $q1=="0")||isset($q1)==false) echo "selected=\"selected\""?> value="0">0</option>
+                <select size=3 name="q1" id="select1" class="selects" onchange='updateAll();'>
+                  <option <?php if (isset($q1)&& $q1=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q1)&& $q1=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q1)&& $q1=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q1)&& $q1=="3") echo "selected=\"selected\""?> value="3">3</option>
+                </select>
               </td>
-              <td><p>20</p></td>
-              <td></td>
+              <td><p>$20</p></td>
+              <td><div id="q1td"><p>$ <?php echo $q1*20;?></p></div></td>
             </tr>
 
             <tr>
-              <td><img src="images/t2.jpeg" alt=" " class="orderImage"></td>
-              <td><p>Round Stool</p></td>
+              <td><img src="images/t2.jpeg" alt="Round Stool, Pine" class="orderImage"></td>
+              <td><p>Round Stool, Pine</p></td>
               <td>
-                <label for="select1">Quantity</label><br>
-                <select size=3 name="select1" id="select1" class="selects">
-                  <option <?php if ((isset($q2)&& $q2=="0")||isset($q2)==false) echo "selected=\"selected\""?> value="0">0</option>
+                <label for="select2">Quantity</label><br>
+                <select size=3 name="q2" id="select2" class="selects" onchange='updateAll();'>
+                  <option <?php if (isset($q2)&& $q2=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q2)&& $q2=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q2)&& $q2=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q2)&& $q2=="3") echo "selected=\"selected\""?> value="3">3</option>
+                  </select>
               </td>
-              <td><p>20</p></td>
-              <td></td>
+              <td><p>$30</p></td>
+              <td><div id="q2td"><p>$ <?php echo $q2*30;?></p></div></td>
             </tr>
 
             <tr>
-              <td><img src="images/t2.jpeg" alt=" " class="orderImage"></td>
-              <td><p>Round Stool</p></td>
+              <td><img src="images/t3.jpg" alt="Bench Table, Unpolished" class="orderImage"></td>
+              <td><p>Bench Table, Unpolished</p></td>
               <td>
-                <label for="select1">Quantity</label><br>
-                <select size=3 name="select2" id="select2" class="selects">
-                  <option <?php if ((isset($q3)&& $q3=="0")||isset($q3)==false) echo "selected=\"selected\""?> value="0">0</option>
+                <label for="select3">Quantity</label><br>
+                <select size=3 name="q3" id="select3" class="selects" onchange='updateAll();'>
+                  <option <?php if (isset($q3)&& $q3=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q3)&& $q3=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q3)&& $q3=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q3)&& $q3=="3") echo "selected=\"selected\""?> value="3">3</option>
+                  </select>
               </td>
-              <td><p>20</p></td>
-              <td></td>
+              <td><p>$40</p></td>
+              <td><div id="q3td"><p>$ <?php echo $q3*40;?></p></div></td>
             </tr>
 
             <tr>
-              <td><img src="images/t2.jpeg" alt=" " class="orderImage"></td>
-              <td><p>Round Stool</p></td>
+              <td><img src="images/t4.jpg" alt="Round Table, Balsa" class="orderImage"></td>
+              <td><p>Round Table, Balsa</p></td>
               <td>
-                <label for="select1">Quantity</label><br>
-                <select size=3 name="select3" id="select3" class="selects">
-                  <option <?php if ((isset($q4)&& $q4=="0")||isset($q4)==false) echo "selected=\"selected\""?> value="0">0</option>
+                <label for="select4">Quantity</label><br>
+                <select size=3 name="q4" id="select4" class="selects" onchange='updateAll();'>
+                  <option <?php if (isset($q4)&& $q4=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q4)&& $q4=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q4)&& $q4=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q4)&& $q4=="3") echo "selected=\"selected\""?> value="3">3</option>
+                  </select>
+
+
               </td>
-              <td><p>20</p></td>
-              <td></td>
+              <td><p>$50</p></td>
+              <td><div id="q4td"><p>$ <?php echo $q4*50;?></p></div></td>
             </tr>
           </tbody>
         </table>
@@ -161,57 +194,72 @@ function test_input($data) {
           </thead>
           <tbody>
             <tr>
-              <td><img src="images/t2.jpeg" alt=" " class="orderImage"></td>
-              <td><p>Round Stool</p></td>
+              <td><img src="images/t5.jpg" alt="Chess Table" class="orderImage"></td>
+              <td><p>Chess Table</p></td>
               <td>
-                <label for="select1">Quantity</label><br>
-                <select size=3 name="select1" id="select1" class="selects">
-                  <option <?php if ((isset($q5)&& $q5=="0")||isset($q5)==false) echo "selected=\"selected\""?> value="0">0</option>
+                <label for="select5">Quantity</label><br>
+                <select size=3 name="q5" id="select5" class="selects" onchange='updateAll();'>
+                  <option <?php if (isset($q5)&& $q5=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q5)&& $q5=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q5)&& $q5=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q5)&& $q5=="3") echo "selected=\"selected\""?> value="3">3</option>
+                  </select>
               </td>
-              <td><p>20</p></td>
-              <td></td>
+              <td><p>$10</p></td>
+              <td><div id="q5td"><p>$ <?php echo $q5*10;?></p></div></td>
             </tr>
 
             <tr>
-              <td><img src="images/t2.jpeg" alt=" " class="orderImage"></td>
-              <td><p>Round Stool</p></td>
+              <td><img src="images/t6.jpeg" alt="Round Stool, Unpolished" class="orderImage"></td>
+              <td><p>Round Stool, Unpolished</p></td>
               <td>
-                <label for="select1">Quantity</label><br>
-                <select size=3 name="select1" id="select1" class="selects">
-                  <option <?php if ((isset($q6)&& $q6=="0")||isset($q6)==false) echo "selected=\"selected\""?> value="0">0</option>
+                <label for="select6">Quantity</label><br>
+                <select size=3 name="q6" id="select6" class="selects" onchange='updateAll();'>
+                  <option <?php if (isset($q6)&& $q6=="0") echo "selected=\"selected\""?> value="0">0</option>
                   <option <?php if (isset($q6)&& $q6=="1") echo "selected=\"selected\""?> value="1">1</option>
                   <option <?php if (isset($q6)&& $q6=="2") echo "selected=\"selected\""?> value="2">2</option>
                   <option <?php if (isset($q6)&& $q6=="3") echo "selected=\"selected\""?> value="3">3</option>
+                  </select>
               </td>
-              <td><p>20</p></td>
-              <td></td>
+              <td><p>$15</p></td>
+              <td><div id="q6td"><p>$ <?php echo $q6*15;?></p></div></td>
             </tr>
           </tbody>
         </table>
       </div>
+      <table class="table-fill">
+        <thead>
+          <tr>
+            <th colspan="2" id="blankth"><p>subtotal</p></th>
+          </tr>
+        </thead>
+          <tbody>
+          <tr class="totals">
+            <td><p>Subtotal<p></td>
+            <td><div id="st"><p>$ <?php echo $subtot;?></p></div></td>
+          </tr>
+          </tbody>
+      </table>
       <p><span class="error">* required field</span></p>
 
       <label for="name">name:</label>
-      <input type="text" name="name" value="<?php echo $name;?>">
+      <input type="text" name="name" id="name" class="required hilightable" value="<?php echo $name;?>">
       <span class="error">* <?php echo $nameErr;?></span>
       <br>
       <label for="email">email:</label>
-      <input type="email" name="email" value="<?php echo $email;?>">
+      <input type="email" name="email" id="email" class="required hilightable" value="<?php echo $email;?>">
       <span class="error">* <?php echo $emailErr;?></span>
       <br>
       <label for="streetAddress"> street address</label>
-      <input type="text" name="streetAddress" value="<?php echo $city;?>">
+      <input type="text" name="streetAddress" id="streetAddress" class="required hilightable" value="<?php echo $city;?>">
       <span class="error">* <?php echo $sAErr;?></span>
       <br>
       <label for="city">city</label>
-      <input type="text" name="city" value="<?php echo $city;?>">
+      <input type="text" name="city" id="city" class="required hilightable" value="<?php echo $city;?>">
       <span class="error">* <?php echo $cityErr;?></span>
       <br>
       <label for="state">state</label><br>
-      <select size=5 name="state">
+      <select size=5 id="state" name="state">
       	<option <?php if ((isset($state)&& $state=="AL")||isset($state)==false) echo "selected=\"selected\""?> value="AL">AL</option>
       	<option <?php if (isset($state)&& $state=="AK") echo "selected=\"selected\""?> value="AK">AK</option>
       	<option <?php if (isset($state)&& $state=="AR") echo "selected=\"selected\""?> value="AR">AR</option>
@@ -265,7 +313,39 @@ function test_input($data) {
       	<option <?php if (isset($state)&& $state=="WY") echo "selected=\"selected\""?> value="WY">WY</option>
       </select>
       <br>
-
+      <label for="zip">zip code</label>
+      <input type="text" name="zip" id="zip" class="required hilightable" value="<?php echo $zip;?>">
+      <span class="error">* <?php echo $zipErr;?></span>
+      <br>
+      <table class="table-fill">
+        <thead>
+          <tr>
+            <th colspan="3" id="blankth1"><p>totals</p></th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr class="totals">
+              <td><p>Shipping<br>shipping is $10 in the 92647 area and $50 outside<p></td>
+              <td>
+                <label for="ship">Quantity</label><br>
+                <select size=2 name="ship" id="ship" class="selects" onchange='shipUpdate();'>
+                  <option <?php if (isset($ship)&& $ship=="0") echo "selected=\"selected\""?> value="0">Pickup</option>
+                  <option <?php if (isset($ship)&& $ship=="10") echo "selected=\"selected\""?> value="10">Shipping in 92647</option>
+                  <option <?php if (isset($ship)&& $ship=="50") echo "selected=\"selected\""?> value="50">Shipping outside 92647</option>
+                </select>
+              </td>
+              <td><div id="shipPrice"><p>$ <?php echo $ship;?></p></div></td>
+            </tr>
+            <tr class="totals">
+              <td colspan="2"><p>Tax</p></td>
+              <td><div id="taxtd"><p>$ <?php echo $tax ?></p></div></td>
+            </tr>
+            <tr class="totals">
+              <td colspan="2"><p>Total</p></td>
+              <td><div id="tottd"><p>$ <?php echo $tot ?></p></div></td>
+            </tr>
+          </tbody>
+      </table>
 
 
         <button class="submitButton" type="reset" name="reset">reset</button>

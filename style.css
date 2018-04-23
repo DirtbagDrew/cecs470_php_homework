@@ -198,8 +198,8 @@ body,
 }
 
 th {
-  color: black;
-  background: #EF6C00;
+  color: white;
+  background: #3a2a0d;
   border-bottom:4px solid #9ea7af;
   border-right: 1px solid #343a45;
   font-size:20px;
@@ -212,6 +212,9 @@ th {
 }
 .productTH{
 	width: 40%;
+}
+#blankth{
+	width: 100%;
 }
 
 th:first-child {
